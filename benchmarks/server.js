@@ -15,7 +15,10 @@ const workers = parseInt(process.env.WORKERS) || os.cpus().length
 if (cluster.isPrimary) {
   try {
     unlinkSync(socketPath)
-  } catch (_) {}
+  } catch (_) {
+    // Do not nothing if the socket does not exist
+  }
+
   for (let i = 0; i < workers; i++) {
     cluster.fork()
   }
